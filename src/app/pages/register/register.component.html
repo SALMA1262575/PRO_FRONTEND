@@ -1,0 +1,27 @@
+<div class="container">
+    <h2>Register</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Nom :</label>
+        <input type="text" id="name" [(ngModel)]="registerRequest.nom" name="nom" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" id="email" [(ngModel)]="registerRequest.email" name="email" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" [(ngModel)]="registerRequest.motDePasse" name="motDePasse" required />
+      </div>
+      <div class="form-group">
+        <label for="role">Rôle :</label>
+        <select id="role" [(ngModel)]="registerRequest.role" name="role" required>
+          <option value="OUVRIER">OUVRIER</option>
+          <option value="SUPERVISEUR">SUPERVISEUR</option>
+        </select>
+      </div>
+      <button type="submit">S'inscrire</button>
+    </form>
+    <p *ngIf="errorMessage">{{ errorMessage }}</p>
+  </div>
+
