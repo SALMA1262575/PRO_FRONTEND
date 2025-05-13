@@ -1,1 +1,42 @@
-<p>formulaire-ouvrier works!</p>
+<form (ngSubmit)="onSubmit()" #formulaire="ngForm">
+
+  <!-- Champ Categorie -->
+  <div class="form-group">
+    <label for="categorie">Catégorie :</label>
+    <select id="categorie" [(ngModel)]="rapport.categorie" name="categorie" required>
+      <option [ngValue]="null" disabled selected>Choisissez une catégorie</option>
+      <option *ngFor="let c of categories" [ngValue]="c.value">
+        {{ c.label }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Champ Urgent -->
+  <div class="form-group">
+    <label>
+      <input type="checkbox" [(ngModel)]="rapport.urgent" name="urgent">
+      Urgent?
+    </label>
+  </div>
+
+  <!-- Champ Superviseur -->
+  <div class="form-group">
+    <label for="superviseur">Assigner à :</label>
+    <select id="superviseur" [(ngModel)]="rapport.assigneA.id" name="assigneAId" required>
+      <option [ngValue]="null" disabled selected>Sélectionnez un superviseur</option>
+      <option *ngFor="let s of superviseurs" [ngValue]="s.id">
+        {{ s.nom }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Champ Photos -->
+  <div class="form-group">
+    <label>Photos :</label>
+    <input type="file" multiple (change)="onFileChange($event)" accept="image/*" />
+  </div>
+
+  <!-- Bouton Soumettre -->
+  <button type="submit">Envoyer Rapport</button>
+
+</form>
