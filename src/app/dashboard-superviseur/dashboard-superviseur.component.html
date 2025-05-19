@@ -1,1 +1,74 @@
-<p>dashboard-superviseur works!</p>
+<div class="dashboard">
+  <h2>Tableau de bord Superviseur</h2>
+
+  <!-- Filtres -->
+  <div class="filters">
+    <label for="categorie">Filtrer par catégorie :</label>
+    <input type="text" id="categorie" [(ngModel)]="filtreCategorie" placeholder="Catégorie">
+
+    <label for="statut">Filtrer par statut :</label>
+    <input type="text" id="statut" [(ngModel)]="filtreStatut" placeholder="Statut">
+
+    <button (click)="filtrerRapports()" [disabled]="loading">Appliquer les filtres</button>
+    <button (click)="getTousLesRapports()" [disabled]="loading">Réinitialiser</button>
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loading" class="loader">
+    Chargement en cours...
+  </div>
+
+  <!-- Liste des rapports -->
+  <table *ngIf="!loading && rapports.length > 0" class="rapports-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Catégorie</th>
+        <th>Statut</th> 
+        <th>description</th>
+        <th>Équipe assignée</th>
+        <th>Actions</th>  
+       
+          
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rapport of rapports">
+        <td>{{ rapport.id }}</td>
+        <td>{{ rapport.categorie }}</td>
+        <td>{{ rapport.statut }}</td> 
+        <td>{{ rapport.description}}</td>
+        <td>{{ rapport.equipe || 'Aucune' }}</td>
+        <td class="actions">
+          <!-- Changer le statut -->
+          <select 
+            (change)="onChangerStatut(rapport, $event)"
+            [value]="rapport.statut">
+            <option value="ouvert">Ouvert</option>
+            <option value="en_cours">En cours</option>
+            <option value="resolu">Résolu</option>
+          </select>
+
+          <!-- Assigner à une équipe -->
+          <input type="text" #equipeInput placeholder="Nom de l'équipe">
+          <button (click)="assignerEquipe(rapport.id, equipeInput.value)">Assigner</button>
+
+          <!-- Voir les photos -->
+          <button (click)="voirPhotos(rapport.id)">Voir les photos</button>  
+          
+        </td> 
+      </tr>
+    </tbody>
+  </table>  
+  <!-- Affichage des photos du rapport sélectionné -->
+<div *ngIf="photos.length > 0" style="margin-top: 20px;">
+  <h3>Photos du rapport</h3>
+  <div *ngFor="let photo of photos">
+    <img [src]="photo" alt="Photo du rapport" style="max-width: 300px; margin-bottom: 15px;">
+  </div>
+</div>
+
+  
+
+  <p *ngIf="!loading && rapports.length === 0">Aucun rapport trouvé.</p>
+</div>

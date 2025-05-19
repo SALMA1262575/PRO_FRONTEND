@@ -9,7 +9,13 @@
         {{ c.label }}
       </option>
     </select>
-  </div>
+  </div> 
+  <!-- Champ Description -->
+<div class="form-group">
+  <label for="description">Description :</label>
+  <textarea id="description" [(ngModel)]="rapport.description" name="description" required rows="3" placeholder="Décrivez le problème ici..." class="form-control"></textarea>
+</div>
+
 
   <!-- Champ Urgent -->
   <div class="form-group">
