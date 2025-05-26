@@ -1,30 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { RapportService } from '../rapports.service';
+import { Router } from '@angular/router'; // 👈 Import du Router
 
 interface Rapport {
   id: number;
   categorie: string;
   statut: string;
-
-  equipe?: string;  
+  equipe?: string;
   description?: string;
-  // autres propriétés selon besoin
 }
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard-superviseur.component.html',
-
+  styleUrls: ['./dashboard-superviseur.component.css']
 })
-export class DashboardSuperviseurComponent implements OnInit {
+export class DashboardSuperviseurComponent implements OnInit { 
+  isMenuOpen = false; 
 
   rapports: Rapport[] = [];
   filtreCategorie: string = '';
   filtreStatut: string = '';
-  
   loading: boolean = false;
+  photos: string[] = [];
+  showModal: boolean = false;
 
-  constructor(private rapportService: RapportService) {}
+  constructor(
+    private rapportService: RapportService,
+    private router: Router // 👈 Injection du Router
+  ) {}
 
   ngOnInit(): void {
     this.getTousLesRapports();
@@ -46,7 +50,7 @@ export class DashboardSuperviseurComponent implements OnInit {
 
   filtrerRapports(): void {
     this.loading = true;
-    this.rapportService.filtrerRapports(this.filtreCategorie, this.filtreStatut, ).subscribe({
+    this.rapportService.filtrerRapports(this.filtreCategorie, this.filtreStatut).subscribe({
       next: (data) => {
         this.rapports = data;
         this.loading = false;
@@ -56,12 +60,13 @@ export class DashboardSuperviseurComponent implements OnInit {
         this.loading = false;
       }
     });
-  } 
+  }
+
   onChangerStatut(rapport: Rapport, event: Event): void {
-  const select = event.target as HTMLSelectElement;
-  const nouveauStatut = select.value;
-  this.changerStatut(rapport.id, nouveauStatut);
-}
+    const select = event.target as HTMLSelectElement;
+    const nouveauStatut = select.value;
+    this.changerStatut(rapport.id, nouveauStatut);
+  }
 
   changerStatut(id: number, nouveauStatut: string): void {
     this.rapportService.changerStatut(id, nouveauStatut).subscribe({
@@ -86,23 +91,39 @@ export class DashboardSuperviseurComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Erreur lors de l\'assignation à l\'équipe', err);
+        console.error("Erreur d'assignation à l'équipe", err);
       }
     });
   }
 
-photos: string[] = []; // variable pour stocker les URLs des photos
+  voirPhotos(id: number): void {
+    this.rapportService.voirPhotos(id).subscribe({
+      next: (photos) => {
+        this.photos = photos;
+        this.showModal = true;
+      },
+      error: (err) => {
+        console.error("Erreur de chargement des photos", err);
+      }
+    });
+  }
 
-voirPhotos(id: number): void {
-  this.rapportService.voirPhotos(id).subscribe({
-    next: (photos) => {
-      console.log('Photos du rapport:', photos);
-      this.photos = photos; // stocke le tableau d'URL pour affichage
-    },
-    error: (err) => {
-      console.error('Erreur lors du chargement des photos', err);
-    }
-  });
+  fermerModal(): void {
+    this.showModal = false;
+  }
+    
+  // 🔗 Méthode pour aller vers la page rapports
+  allerAuxRapports(): void {
+    this.router.navigate(['/rapports-dashboard']);
+  } 
+  toggleMenu(){ 
+    this.isMenuOpen = !this.isMenuOpen;
+    
+  }
+  // 🔐 Méthode de déconnexion
+  deconnecter(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
+  }
 }
-}
-

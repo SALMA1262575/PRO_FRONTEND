@@ -1,0 +1,68 @@
+<div class="dashboard"> 
+  <!-- Menu utilisateur -->
+  <div class="user-menu-container">
+    <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
+      <i class="fas fa-user-circle"></i>
+    </button>
+
+    <div class="dropdown-menu" *ngIf="isMenuOpen">
+      <button (click)="allerAuxRapports()">
+        <i class="fas fa-eye"></i> Voir les rapports
+      </button>
+      <button (click)="deconnecter()">
+        <i class="fas fa-sign-out-alt"></i> Se déconnecter
+      </button>
+    </div>
+  </div>
+
+  <!-- Titre -->
+  <div class="header-section">
+    <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo">
+    <h2 class="dashboard-title">Tableau de bord des rapports</h2>
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loading" class="loader">Chargement des rapports...</div>
+
+  <!-- Erreur -->
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <!-- Widgets -->
+  <div class="widgets">
+    <!-- Widget Total des rapports (bordeaux) -->
+    <div class="widget total">
+      <h4>Total des rapports</h4>
+      <p class="value">{{ totalRapports }}</p>
+    </div>
+
+    <!-- Widget Ouverts (vert) -->
+    <div class="widget green">
+      <h4>Ouverts</h4>
+      <p class="value">{{ rapportsOuverts }}</p>
+    </div>
+
+    <!-- Widget En cours (orange) -->
+    <div class="widget orange">
+      <h4>En cours</h4>
+      <p class="value">{{ rapportsEnCours }}</p>
+    </div>
+
+    <!-- Widget Résolus (bleu) -->
+    <div class="widget blue">
+      <h4>Résolus</h4>
+      <p class="value">{{ rapportsResolus }}</p>
+    </div>
+  </div>
+
+  <!-- Graphique -->
+  <div class="chart-container">
+    <canvas id="rapportChart" width="300" height="150"></canvas>
+  </div> 
+  <!-- Optionnel : Ajoute cette petite info supplémentaire -->
+<div class="rapport-info">
+  <p *ngIf="rapportsOuverts > 0 && !loading" class="rapport-details">
+    <strong>{{ rapportsOuverts }}</strong> rapports ouverts sur {{ totalRapports }}
+  </p>
+</div>
+
+</div>

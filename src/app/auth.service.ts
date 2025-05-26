@@ -19,5 +19,6 @@ export class AuthService {
 
   register(registerRequest: RegisterRequest): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/register`, registerRequest);
-  }
-}
+  } 
+  
+} 

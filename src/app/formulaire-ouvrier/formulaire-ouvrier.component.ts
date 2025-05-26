@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { RapportService } from '../rapport.service'; // Ajuste selon ta structure
+import { RapportService } from '../rapport.service'; // Ajuste selon ta structure  
+import { Router } from '@angular/router'; 
 
 interface Superviseur {
   id: number;
@@ -9,9 +10,11 @@ interface Superviseur {
 
 @Component({
   selector: 'app-formulaire-ouvrier',
-  templateUrl: './formulaire-ouvrier.component.html'
+  templateUrl: './formulaire-ouvrier.component.html',
+   styleUrls: ['./formulaire-ouvrier.component.css']
 })
-export class FormulaireOuvrierComponent implements OnInit {
+export class FormulaireOuvrierComponent implements OnInit { 
+   isMenuOpen = false; 
 
   rapport = {
     description: '',
@@ -34,7 +37,8 @@ export class FormulaireOuvrierComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private rapportService: RapportService
+    private rapportService: RapportService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -108,5 +112,16 @@ export class FormulaireOuvrierComponent implements OnInit {
       }
     };
     this.photos = [];
+  }  
+    toggleMenu(){ 
+    this.isMenuOpen = !this.isMenuOpen;
+    
   }
+  // 🔐 Méthode de déconnexion
+  deconnecter(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']);
+  }
+
 }

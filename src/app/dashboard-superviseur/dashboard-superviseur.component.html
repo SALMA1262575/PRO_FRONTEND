@@ -1,5 +1,26 @@
 <div class="dashboard">
-  <h2>Tableau de bord Superviseur</h2>
+
+  <!-- Menu utilisateur -->
+  <div class="user-menu-container">
+    <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
+      <i class="fas fa-user-circle" style="font-size: 24px; color: #1e293b;"></i>
+    </button>
+
+    <div class="dropdown-menu" *ngIf="isMenuOpen">
+      <button (click)="allerAuxRapports()">
+        <i class="fas fa-eye"></i> Voir les rapports
+      </button>
+      <button (click)="deconnecter()">
+        <i class="fas fa-sign-out-alt"></i> Se déconnecter
+      </button>
+    </div>
+  </div>
+
+  <!-- Titre et logo -->
+  <div class="header-section">
+    <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo">
+    <h2 class="dashboard-title">Tableau de bord Superviseur</h2>
+  </div>
 
   <!-- Filtres -->
   <div class="filters">
@@ -18,26 +39,24 @@
     Chargement en cours...
   </div>
 
-  <!-- Liste des rapports -->
+  <!-- Tableau des rapports -->
   <table *ngIf="!loading && rapports.length > 0" class="rapports-table">
     <thead>
       <tr>
         <th>ID</th>
         <th>Catégorie</th>
-        <th>Statut</th> 
-        <th>description</th>
+        <th>Statut</th>
+        <th>Description</th>
         <th>Équipe assignée</th>
-        <th>Actions</th>  
-       
-          
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let rapport of rapports">
         <td>{{ rapport.id }}</td>
         <td>{{ rapport.categorie }}</td>
-        <td>{{ rapport.statut }}</td> 
-        <td>{{ rapport.description}}</td>
+        <td>{{ rapport.statut }}</td>
+        <td>{{ rapport.description }}</td>
         <td>{{ rapport.equipe || 'Aucune' }}</td>
         <td class="actions">
           <!-- Changer le statut -->
@@ -54,21 +73,32 @@
           <button (click)="assignerEquipe(rapport.id, equipeInput.value)">Assigner</button>
 
           <!-- Voir les photos -->
-          <button (click)="voirPhotos(rapport.id)">Voir les photos</button>  
-          
-        </td> 
+          <button (click)="voirPhotos(rapport.id)">Voir les photos</button>
+        </td>
       </tr>
     </tbody>
-  </table>  
-  <!-- Affichage des photos du rapport sélectionné -->
-<div *ngIf="photos.length > 0" style="margin-top: 20px;">
-  <h3>Photos du rapport</h3>
-  <div *ngFor="let photo of photos">
-    <img [src]="photo" alt="Photo du rapport" style="max-width: 300px; margin-bottom: 15px;">
-  </div>
-</div>
+  </table>
 
-  
-
+  <!-- Aucun rapport trouvé -->
   <p *ngIf="!loading && rapports.length === 0">Aucun rapport trouvé.</p>
+
+  <!-- Affichage des photos -->
+  <div *ngIf="photos.length > 0" class="photos-section">
+    <h3>Photos du rapport</h3>
+    <div class="photo-gallery">
+      <img *ngFor="let photo of photos" [src]="photo" alt="Photo du rapport" class="photo">
+    </div>
+  </div>
+
+  <!-- Modale pour afficher les photos -->
+  <div *ngIf="showModal" class="overlay" (click)="fermerModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <span class="close" (click)="fermerModal()">×</span>
+      <h2>Photos du rapport</h2>
+      <div class="gallery">
+        <img *ngFor="let photo of photos" [src]="photo" alt="Photo rapport">
+      </div>
+    </div>
+  </div>
+
 </div>

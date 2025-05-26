@@ -1,0 +1,383 @@
+/* Styles principaux du dashboard */
+.dashboard {
+  padding: 20px;
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+}
+
+.dashboard h2 {
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+/* Menu utilisateur déroulant */
+.user-menu-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.user-icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.user-icon-button:hover {
+  background-color: #e9ecef;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background-color: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  min-width: 180px;
+  border-radius: 5px;
+  padding: 10px 0;
+  font-size: 14px;
+  border-top: 1px solid #eee;
+}
+
+.dropdown-menu button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 15px;
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: #333;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.dropdown-menu button:hover {
+  background-color: #ffe5e5;
+color: #800000;
+font-weight: 500;
+}
+
+.dropdown-menu button i {
+  margin-right: 10px;
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Titre et logo */
+.header-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-right: 15px;
+}
+
+.dashboard-title {
+  color: #334155;
+  font-size: 30px;
+  font-weight: 500;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  letter-spacing: 1px;
+  border-left: 5px solid rgb(147, 25, 20);
+  padding-left: 15px;
+  margin: 0;
+}
+
+/* Section des filtres */
+.filters {
+  background: white;
+  padding: 15px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.filters label {
+  font-weight: 500;
+  color: #555;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.filters input[type="text"] {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 14px;
+  min-width: 150px;
+}
+
+.filters input[type="text"]:focus {
+  outline: none;
+  border-color: rgb(147, 25, 20);
+  box-shadow: 0 0 0 2px rgba(147, 25, 20, 0.2);
+}
+
+.filters button {
+  padding: 8px 16px;
+  border: 1px solid rgb(147, 25, 20);
+  background: rgb(147, 25, 20);
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.filters button:hover {
+  background-color: rgb(110, 19, 15);
+  border-color: rgb(110, 19, 15);
+}
+
+.filters button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+/* Loader */
+.loader {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-style: italic;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Tableau des rapports */
+.rapports-table {
+  width: 100%;
+  background: white;
+  border-collapse: collapse;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #dee2e6;
+}
+
+.rapports-table thead {
+  background-color: #f8f9fa;
+}
+
+.rapports-table th,
+.rapports-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+  font-size: 13px;
+  color: #495057;
+}
+
+.rapports-table th {
+  font-weight: 600;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.rapports-table th:last-child,
+.rapports-table td:last-child {
+  border-right: none;
+}
+
+.rapports-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.rapports-table tbody tr:nth-child(even) {
+  background-color: #fdfdfd;
+}
+
+/* Actions dans le tableau */
+.actions {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.actions select,
+.actions input[type="text"],
+.actions button {
+  font-size: 12px;
+  padding: 4px 6px;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  background: white;
+  color: #495057;
+  min-width: 100px;
+  max-width: 120px;
+}
+
+.actions select:focus,
+.actions input[type="text"]:focus {
+  outline: none;
+  border-color: rgb(147, 25, 20);
+  box-shadow: 0 0 0 1px rgba(147, 25, 20, 0.25);
+}
+
+.actions button {
+  background: rgb(147, 25, 20);
+  color: white;
+  border: 1px solid rgb(147, 25, 20);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.actions button:hover {
+  background-color: rgb(110, 19, 15);
+  border-color: rgb(110, 19, 15);
+}
+
+/* Section photos */
+.photos-section {
+  margin-top: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #dee2e6;
+}
+
+.photos-section h3 {
+  color: #495057;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.photos-section > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.photos-section img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+}
+
+/* Message "Aucun rapport trouvé" */
+.dashboard p {
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
+  font-style: italic;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #dee2e6;
+  margin-top: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters > * {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .rapports-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .rapports-table th,
+  .rapports-table td {
+    min-width: 80px;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 4px;
+    min-width: 150px;
+  }
+
+  .actions > * {
+    width: 100%;
+  }
+}
+
+/* Modale d'affichage des photos */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+  border-top: 8px solid #800000; /* Bordeaux */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.gallery img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}

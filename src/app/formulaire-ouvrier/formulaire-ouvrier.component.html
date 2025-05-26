@@ -1,48 +1,90 @@
-<form (ngSubmit)="onSubmit()" #formulaire="ngForm">
+<div class="dashboard">
+  
+  <!-- Menu utilisateur -->
+  <div class="user-menu-container">
+    <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
+      <i class="fas fa-user-circle" style="font-size: 24px; color: #1e293b;"></i>
+    </button>
 
-  <!-- Champ Categorie -->
-  <div class="form-group">
-    <label for="categorie">Catégorie :</label>
-    <select id="categorie" [(ngModel)]="rapport.categorie" name="categorie" required>
-      <option [ngValue]="null" disabled selected>Choisissez une catégorie</option>
-      <option *ngFor="let c of categories" [ngValue]="c.value">
-        {{ c.label }}
-      </option>
-    </select>
-  </div> 
-  <!-- Champ Description -->
-<div class="form-group">
-  <label for="description">Description :</label>
-  <textarea id="description" [(ngModel)]="rapport.description" name="description" required rows="3" placeholder="Décrivez le problème ici..." class="form-control"></textarea>
+    <div class="dropdown-menu" *ngIf="isMenuOpen">
+      
+      <button (click)="deconnecter()">
+        <i class="fas fa-sign-out-alt"></i> Se déconnecter
+      </button>
+    </div>
+  </div>
+  <div style="display: inline-block; text-align: left; margin: 2px 0;">
+    <img src="assets/images/tgcc.png" alt="Icône" style="width: 50px; height: 50px; object-fit: contain; display: block; margin-bottom: 10px;">
+    <h2 style="
+      color: #334155;
+      font-size: 30px;
+      font-weight: 500;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      letter-spacing: 1px;
+      border-left: 5px solid rgb(147, 25, 20);
+      padding-left: 15px;
+      margin: 0;
+    ">
+      Formulaire
+    </h2> 
+    <!-- Ligne rouge sous le titre -->
+<div class="subtitle-divider">
+  <hr class="divider-line">
 </div>
-
-
-  <!-- Champ Urgent -->
-  <div class="form-group">
-    <label>
-      <input type="checkbox" [(ngModel)]="rapport.urgent" name="urgent">
-      Urgent?
-    </label>
   </div>
 
-  <!-- Champ Superviseur -->
-  <div class="form-group">
-    <label for="superviseur">Assigner à :</label>
-    <select id="superviseur" [(ngModel)]="rapport.assigneA.id" name="assigneAId" required>
-      <option [ngValue]="null" disabled selected>Sélectionnez un superviseur</option>
-      <option *ngFor="let s of superviseurs" [ngValue]="s.id">
-        {{ s.nom }}
-      </option>
-    </select>
-  </div>
+  <form (ngSubmit)="onSubmit()" #formulaire="ngForm" novalidate>
+    <!-- Catégorie -->
+    <div class="form-group">
+      <label for="categorie">Catégorie :</label>
+      <select id="categorie" [(ngModel)]="rapport.categorie" name="categorie" required class="form-control">
+        <option [ngValue]="null" disabled>Choisissez une catégorie</option>
+        <option *ngFor="let c of categories" [ngValue]="c.value">{{ c.label }}</option>
+      </select>
+      <div *ngIf="formulaire.submitted && !rapport.categorie" class="error-msg">
+        Veuillez choisir une catégorie.
+      </div>
+    </div>
 
-  <!-- Champ Photos -->
-  <div class="form-group">
-    <label>Photos :</label>
-    <input type="file" multiple (change)="onFileChange($event)" accept="image/*" />
-  </div>
+    <!-- Description -->
+    <div class="form-group">
+      <label for="description">Description :</label>
+      <textarea id="description" [(ngModel)]="rapport.description" name="description" required rows="3" placeholder="Décrivez le problème ici..." class="form-control"></textarea>
+      <div *ngIf="formulaire.submitted && !rapport.description" class="error-msg">
+        La description est obligatoire.
+      </div>
+    </div>
 
-  <!-- Bouton Soumettre -->
-  <button type="submit">Envoyer Rapport</button>
+    <!-- Urgent -->
+    <div class="form-group checkbox-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="rapport.urgent" name="urgent" />
+        Urgent ?
+      </label>
+    </div>
 
-</form>
+    <!-- Superviseur -->
+    <div class="form-group">
+      <label for="superviseur">Assigner à :</label>
+      <select id="superviseur" [(ngModel)]="rapport.assigneA.id" name="assigneAId" required class="form-control">
+        <option [ngValue]="null" disabled>Sélectionnez un superviseur</option>
+        <option *ngFor="let s of superviseurs" [ngValue]="s.id">{{ s.nom }}</option>
+      </select>
+      <div *ngIf="formulaire.submitted && !rapport.assigneA?.id" class="error-msg">
+        Veuillez choisir un superviseur.
+      </div>
+    </div>
+
+    <!-- Photos -->
+    <div class="form-group">
+      <label>Photos :</label>
+      <input type="file" multiple (change)="onFileChange($event)" accept="image/*" />
+    </div>
+
+    <!-- Bouton soumettre -->
+    <button type="submit" [disabled]="formulaire.invalid" class="btn-submit">
+      Envoyer Rapport
+    </button>
+  </form>
+</div>

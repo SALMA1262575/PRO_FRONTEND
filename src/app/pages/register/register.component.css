@@ -1,0 +1,157 @@
+/* Arrière-plan flouté */
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/images/Image-back.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px);
+  z-index: -1;
+}
+
+/* Conteneur principal du formulaire */
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 450px;
+  width: 100%;
+  padding: 2.5rem;
+  border: 2px solid rgb(147, 25, 20); /* Bordure principale */
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 6px 15px rgba(147, 25, 20, 0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 1;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Animation douce d'apparition */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Logo TGCC */
+.logo-container {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.logo-tgcc {
+  width: 80px;
+  height: auto;
+  border-radius: 6px;
+  transition: transform 0.3s ease;
+}
+
+.logo-tgcc:hover {
+  transform: scale(1.05);
+}
+
+/* Titre Register */
+h2 {
+  text-align: center;
+  color: rgb(147, 25, 20);
+  margin-bottom: 1.8rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  border-bottom: 2px solid rgb(147, 25, 20);
+  padding-bottom: 0.5rem;
+}
+
+/* Groupes de champs */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: rgb(147, 25, 20);
+  font-weight: 600;
+}
+
+/* Champs de saisie et select */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid rgb(147, 25, 20);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  background-color: #fdfdfd;
+}
+
+/* Effet au focus */
+input:focus,
+select:focus {
+  outline: none;
+  border-color: rgb(100, 15, 10);
+  box-shadow: 0 0 8px rgba(147, 25, 20, 0.4);
+}
+
+/* Bouton d'inscription */
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: rgb(147, 25, 20);
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: rgb(100, 15, 10);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(147, 25, 20, 0.3);
+}
+
+/* Message d'erreur */
+p[ngif] {
+  color: #e74c3c;
+  margin-top: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Lien vers login */
+.login-link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.login-link p {
+  font-size: 0.95rem;
+  color: rgb(147, 25, 20);
+}
+
+.login-link a {
+  color: rgb(147, 25, 20);
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.login-link a:hover {
+  color: rgb(100, 15, 10);
+}

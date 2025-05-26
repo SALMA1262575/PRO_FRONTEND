@@ -1,21 +1,33 @@
+<!-- Fond flouté -->
+<div class="background-container"></div>
+
+<!-- Formulaire (non flouté) -->
 <div class="container">
-    <h2>Connexion</h2>
-    <form (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="email">Email :</label>
-        <input type="email" id="email" [(ngModel)]="loginRequest.email" name="email" required />
-      </div>
-      <div class="form-group">
-        <label for="password">Mot de passe :</label>
-        <input type="password" id="password" [(ngModel)]="loginRequest.motDePasse" name="motDePasse" required />
-      </div>
-      <button type="submit">Se connecter</button>
-    </form>
-    <p *ngIf="errorMessage">{{ errorMessage }}</p> 
-      <!-- Bouton pour accéder à la page de register -->
-      <div class="register-link" style="margin-top: 15px;">
-        <p>Pas encore inscrit ? <a (click)="goToRegister()" style="color: blue; cursor: pointer;">Créer un compte</a></p>
-      </div>
-      
+  <!-- Logo TGCC réduit -->
+  <div class="logo-container">
+    <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo-tgcc" />
   </div>
 
+  <!-- Titre encadré -->
+  <div class="title-box">
+    <h2>Connexion</h2>
+  </div>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email :</label>
+      <input type="email" id="email" [(ngModel)]="loginRequest.email" name="email" required />
+    </div>
+    <div class="form-group">
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" [(ngModel)]="loginRequest.motDePasse" name="motDePasse" required />
+    </div>
+    <button type="submit">Se connecter</button>
+  </form>
+
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <div class="register-link" style="margin-top: 15px;">
+    <p>Pas encore inscrit ? <a (click)="goToRegister()">Créer un compte</a></p>
+  </div>
+</div>

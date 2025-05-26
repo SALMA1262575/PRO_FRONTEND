@@ -9,7 +9,10 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { DashboardSuperviseurComponent } from './dashboard-superviseur/dashboard-superviseur.component';
-import { FormulaireOuvrierComponent } from './formulaire-ouvrier/formulaire-ouvrier.component'; // Modification ici
+import { FormulaireOuvrierComponent } from './formulaire-ouvrier/formulaire-ouvrier.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DashboardRapportsComponent } from './dashboard-rapports/dashboard-rapports.component';
+
 
 @NgModule({
   declarations: [
@@ -18,13 +21,16 @@ import { FormulaireOuvrierComponent } from './formulaire-ouvrier/formulaire-ouvr
     RegisterComponent,
     HomeComponent,
     DashboardSuperviseurComponent,
-    FormulaireOuvrierComponent
+    FormulaireOuvrierComponent,
+    DashboardRapportsComponent,
+   
   ],
   imports: [
     BrowserModule,
     AppRoutingModule, // Utilisation du module de routing
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
