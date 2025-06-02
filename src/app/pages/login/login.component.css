@@ -10,7 +10,7 @@
   background-image: url('/assets/images/Image-back.jpg'); /* Remplace par ton image */
   background-size: cover;
   background-position: center;
-  filter: blur(5px); /* Effet flou */
+  filter: blur(3px); /* Effet flou */
   z-index: -1; /* Assure que le fond est derrière le formulaire */
 }
 .container {
