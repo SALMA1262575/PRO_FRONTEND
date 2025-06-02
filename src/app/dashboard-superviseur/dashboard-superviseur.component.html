@@ -7,9 +7,6 @@
     </button>
 
     <div class="dropdown-menu" *ngIf="isMenuOpen">
-      <button (click)="allerAuxRapports()">
-        <i class="fas fa-eye"></i> Voir les rapports
-      </button>
       <button (click)="deconnecter()">
         <i class="fas fa-sign-out-alt"></i> Se déconnecter
       </button>
@@ -44,9 +41,14 @@
     <thead>
       <tr>
         <th>ID</th>
+        <th>Titre</th>
         <th>Catégorie</th>
         <th>Statut</th>
         <th>Description</th>
+        <th>Urgent ?</th>
+        <th>Priorité</th>
+        <th>Criticité</th>
+        <th>Date incident</th>
         <th>Équipe assignée</th>
         <th>Actions</th>
       </tr>
@@ -54,9 +56,14 @@
     <tbody>
       <tr *ngFor="let rapport of rapports">
         <td>{{ rapport.id }}</td>
+        <td>{{ rapport.titre }}</td>
         <td>{{ rapport.categorie }}</td>
         <td>{{ rapport.statut }}</td>
-        <td>{{ rapport.description }}</td>
+        <td>{{ rapport.description || 'Aucune' }}</td>
+        <td>{{ rapport.urgent ? 'Oui' : 'Non' }}</td>
+        <td>{{ rapport.priorite ? 'Haute' : 'Basse' }}</td>
+        <td>{{ rapport.criticite || 'Non définie' }}</td>
+        <td>{{ rapport.dateIncident || 'Non renseignée' }}</td>
         <td>{{ rapport.equipe || 'Aucune' }}</td>
         <td class="actions">
           <!-- Changer le statut -->

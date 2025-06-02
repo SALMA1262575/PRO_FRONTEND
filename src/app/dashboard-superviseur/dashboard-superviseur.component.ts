@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { RapportService } from '../rapports.service';
-import { Router } from '@angular/router'; // 👈 Import du Router
+import { Router } from '@angular/router';
 
 interface Rapport {
   id: number;
+  titre: string;
   categorie: string;
   statut: string;
   equipe?: string;
   description?: string;
+  urgent: boolean;
+  priorite: boolean;
+  criticite: string;
+  dateIncident: string | null; 
+  Equipe?: string; 
+  
 }
 
 @Component({
@@ -15,8 +22,8 @@ interface Rapport {
   templateUrl: './dashboard-superviseur.component.html',
   styleUrls: ['./dashboard-superviseur.component.css']
 })
-export class DashboardSuperviseurComponent implements OnInit { 
-  isMenuOpen = false; 
+export class DashboardSuperviseurComponent implements OnInit {
+  isMenuOpen = false;
 
   rapports: Rapport[] = [];
   filtreCategorie: string = '';
@@ -27,7 +34,7 @@ export class DashboardSuperviseurComponent implements OnInit {
 
   constructor(
     private rapportService: RapportService,
-    private router: Router // 👈 Injection du Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -111,16 +118,11 @@ export class DashboardSuperviseurComponent implements OnInit {
   fermerModal(): void {
     this.showModal = false;
   }
-    
-  // 🔗 Méthode pour aller vers la page rapports
-  allerAuxRapports(): void {
-    this.router.navigate(['/rapports-dashboard']);
-  } 
-  toggleMenu(){ 
+
+  toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
-    
   }
-  // 🔐 Méthode de déconnexion
+
   deconnecter(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');

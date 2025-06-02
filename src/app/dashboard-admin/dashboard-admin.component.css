@@ -1,0 +1,334 @@
+/* === Styles principaux du dashboard === */
+.dashboard {
+  position: relative;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.dashboard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: url('/assets/images/Creer-une-entreprise-de-batiment-travaux-publics.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(2px);
+  opacity: 0.3;
+  z-index: -1;
+}
+
+.dashboard::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: -1;
+}
+
+/* === En-tête === */
+.header-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-right: 15px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dashboard-title {
+  color: #334155;
+  font-size: 30px;
+  font-weight: 500;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  letter-spacing: 1px;
+  border-left: 5px solid rgb(147, 25, 20);
+  padding-left: 15px;
+  margin: 0;
+}
+
+.separator {
+  width: 3px;
+  height: 24px;
+  background-color: red;
+  margin: 0 12px;
+}
+
+/* === Menu utilisateur === */
+.user-menu-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.user-icon-button {
+  background: #f8f9fa;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.user-icon-button:hover {
+  background-color: #e9ecef;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 10px 0;
+  min-width: 180px;
+  z-index: 1000;
+  font-size: 14px;
+}
+
+.dropdown-menu button {
+  width: 100%;
+  padding: 10px 15px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  color: #333;
+  cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+  background-color: #ffe5e5;
+  color: #800000;
+  font-weight: 500;
+}
+
+.dropdown-menu button i {
+  margin-right: 10px;
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+/* === Filtres === */
+.filters {
+  background: white;
+  padding: 15px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filters label {
+  font-weight: 500;
+  color: #555;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.filters input[type="text"] {
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  min-width: 150px;
+}
+
+.filters input[type="text"]:focus {
+  outline: none;
+  border-color: rgb(147, 25, 20);
+  box-shadow: 0 0 0 2px rgba(147, 25, 20, 0.2);
+}
+
+.filters button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background: rgb(147, 25, 20);
+  color: white;
+  border: 1px solid rgb(147, 25, 20);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.filters button:hover {
+  background-color: rgb(110, 19, 15);
+  border-color: rgb(110, 19, 15);
+}
+
+.filters button:disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* === Loader === */
+.loader {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-style: italic;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* === Formulaire d'ajout === */
+.form-ajout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.form-ajout input,
+.form-ajout select {
+  padding: 8px 10px;
+  font-size: 13px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.form-ajout button.btn-ajouter {
+  background-color: rgb(147, 25, 20);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.form-ajout button.btn-ajouter:hover {
+  background-color: rgb(110, 19, 15);
+}
+
+/* === Tableau === */
+.rapports-table {
+  width: 100%;
+  background: white;
+  border-collapse: collapse;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.rapports-table thead {
+  background: #f8f9fa;
+}
+
+.rapports-table th,
+.rapports-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #dee2e6;
+  border-right: 1px solid rgb(147, 25, 20);
+  font-size: 13px;
+  color: #495057;
+  text-align: left;
+}
+
+.rapports-table th:last-child,
+.rapports-table td:last-child {
+  border-right: none;
+}
+
+.rapports-table th {
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.rapports-table tbody tr:hover {
+  background: #f5f5f5;
+}
+
+.rapports-table tbody tr:nth-child(even) {
+  background: #fdfdfd;
+}
+
+.rapports-table td.actions,
+.rapports-table th.actions {
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* === Boutons dans tableau === */
+.input-password {
+  width: 90%;
+  padding: 6px 8px;
+  font-size: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.btn-reset,
+.btn-delete {
+  background-color: rgb(147, 25, 20);
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  font-size: 11px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-reset:hover,
+.btn-delete:hover {
+  background-color: rgb(110, 19, 15);
+}
+
+/* === Section des photos === */
+.photos-section {
+  margin-top: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.photos-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #495057;
+}
+
+.photos-section > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.photos-section img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

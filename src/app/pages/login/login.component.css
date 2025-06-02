@@ -138,3 +138,20 @@ p[ngif] {
   font-weight: 600;
   text-align: center;
 }
+.register-link {
+  margin-top: 15px;
+  font-size: 0.95rem;
+  color: rgb(147, 25, 20); /* Couleur du texte de base */
+}
+
+.register-link a {
+  color: rgb(147, 25, 20); /* Bordeaux */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+  color: rgb(100, 15, 10); /* Bordeaux foncé au survol */
+  text-decoration: underline;
+}

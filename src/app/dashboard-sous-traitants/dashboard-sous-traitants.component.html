@@ -1,0 +1,86 @@
+<div class="admin-dashboard">
+
+  <!-- Menu utilisateur -->
+  <div class="user-menu-container">
+    <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
+      <i class="fas fa-user-circle" style="font-size: 24px; color: #1e293b;"></i>
+    </button>
+
+    <div class="dropdown-menu" *ngIf="isMenuOpen">
+      <button (click)="Projets()">
+        <i class="fas fa-project-diagram"></i> Projets 
+      </button>   
+      <button (click)="Dashboard()">
+        <i class="fas fa-eye"></i> Dashboard
+      </button> 
+      <button (click)="voirUtilisateurs()">
+        <i class="fas fa-users"></i> Utilisateurs
+      </button> 
+      <button (click)="RapportsR()">
+        <i class="fas fa-eye"></i> Rapports
+      </button>  
+      <button (click)="deconnecter()">
+        <i class="fas fa-sign-out-alt"></i> Se déconnecter
+      </button>  
+    </div>
+  </div>
+
+  <!-- Titre et logo -->
+  <div class="header-section">
+    <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo" />
+    <div class="separator"></div>
+    <h2 class="dashboard-title">Gestion des Sous-traitants</h2>
+  </div>
+
+  <!-- Message de confirmation -->
+  <div *ngIf="message" class="message">{{ message }}</div>
+
+  <!-- Formulaire d'ajout -->
+  <form (submit)="ajouterSousTraitant(); $event.preventDefault()" class="form-ajout">
+    <input
+      type="text"
+      [(ngModel)]="nouveauSousTraitant.nom"
+      name="nom"
+      placeholder="Nom du sous-traitant"
+      required
+    />
+    <button type="submit" class="btn-ajouter">Ajouter</button>
+  </form>
+
+  <!-- Filtre -->
+  <input
+    type="text"
+    placeholder="Filtrer par nom de sous-traitant"
+    [(ngModel)]="filterText"
+    (ngModelChange)="applyFilter()"
+    style="margin-bottom: 10px; padding: 5px; width: 300px;"
+  />
+
+  <!-- Tableau des sous-traitants -->
+  <table class="rapports-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom du sous-traitant</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let st of filteredSousTraitants">
+        <td>{{ st.id }}</td>
+        <td>
+          <input
+            type="text"
+            [(ngModel)]="st.nom"
+            [name]="'nom' + st.id"
+          />
+        </td>
+        <td>
+          <button class="btn-delete" (click)="supprimerSousTraitant(st.id)">Supprimer</button>
+          <button class="btn-ajouter" (click)="mettreAJourSousTraitant(st)">Mettre à jour</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

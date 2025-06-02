@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http'; 
+import { MatSnackBarModule } from '@angular/material/snack-bar'; 
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -12,6 +13,11 @@ import { DashboardSuperviseurComponent } from './dashboard-superviseur/dashboard
 import { FormulaireOuvrierComponent } from './formulaire-ouvrier/formulaire-ouvrier.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardRapportsComponent } from './dashboard-rapports/dashboard-rapports.component';
+import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
+import { DashboardProjetsComponent } from './dashboard-projets/dashboard-projets.component';
+import { DashboardSousTraitantsComponent } from './dashboard-sous-traitants/dashboard-sous-traitants.component';
+import { DashboardRapportsAdminComponent } from './dashboard-rapports-admin/dashboard-rapports-admin.component';
+import { ToastComponent } from './toast/toast.component';
 
 
 @NgModule({
@@ -23,6 +29,11 @@ import { DashboardRapportsComponent } from './dashboard-rapports/dashboard-rappo
     DashboardSuperviseurComponent,
     FormulaireOuvrierComponent,
     DashboardRapportsComponent,
+    DashboardAdminComponent,
+    DashboardProjetsComponent,
+    DashboardSousTraitantsComponent,
+    DashboardRapportsAdminComponent,
+    ToastComponent, 
    
   ],
   imports: [

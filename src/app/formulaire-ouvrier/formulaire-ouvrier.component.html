@@ -1,5 +1,4 @@
 <div class="dashboard">
-  
   <!-- Menu utilisateur -->
   <div class="user-menu-container">
     <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
@@ -7,14 +6,17 @@
     </button>
 
     <div class="dropdown-menu" *ngIf="isMenuOpen">
-      
       <button (click)="deconnecter()">
         <i class="fas fa-sign-out-alt"></i> Se déconnecter
       </button>
     </div>
   </div>
-  <div style="display: inline-block; text-align: left; margin: 2px 0;">
-    <img src="assets/images/tgcc.png" alt="Icône" style="width: 50px; height: 50px; object-fit: contain; display: block; margin-bottom: 10px;">
+
+ <!-- En-tête -->
+<div style="display: flex; align-items: center; gap: 15px; margin: 10px 0;">
+  <img src="assets/images/tgcc.png" alt="Icône" style="width: 50px; height: 50px; object-fit: contain;">
+  
+  <div style="display: flex; flex-direction: column;">
     <h2 style="
       color: #334155;
       font-size: 30px;
@@ -24,67 +26,168 @@
       letter-spacing: 1px;
       border-left: 5px solid rgb(147, 25, 20);
       padding-left: 15px;
-      margin: 0;
+      margin: 0 0 5px 0;
     ">
-      Formulaire
-    </h2> 
-    <!-- Ligne rouge sous le titre -->
-<div class="subtitle-divider">
-  <hr class="divider-line">
-</div>
+      Créer un rapport
+    </h2>
+    
+    <div class="subtitle-divider" style="width: 100%;">
+      <hr class="divider-line" style="margin: 0; border: 1px solid #ccc;">
+    </div>
   </div>
+</div>
 
-  <form (ngSubmit)="onSubmit()" #formulaire="ngForm" novalidate>
-    <!-- Catégorie -->
-    <div class="form-group">
-      <label for="categorie">Catégorie :</label>
-      <select id="categorie" [(ngModel)]="rapport.categorie" name="categorie" required class="form-control">
-        <option [ngValue]="null" disabled>Choisissez une catégorie</option>
-        <option *ngFor="let c of categories" [ngValue]="c.value">{{ c.label }}</option>
-      </select>
-      <div *ngIf="formulaire.submitted && !rapport.categorie" class="error-msg">
-        Veuillez choisir une catégorie.
+  <div class="blurred-background"></div>
+
+  <!-- Formulaire principal -->
+  <div class="form-container"> 
+  
+    <form (ngSubmit)="onSubmit()" #formulaire="ngForm" novalidate>
+
+      <div class="form-columns">
+        <!-- Colonne gauche -->
+        <div class="form-column">
+          <div class="form-group">
+            <label for="titre">Titre du rapport :</label>
+            <input
+  type="text"
+  id="titre"
+  name="titre"
+  [(ngModel)]="rapport.titre"
+  #titre="ngModel"
+  required
+  class="form-control"
+/>
+
+            <div *ngIf="formulaire.submitted && titre.invalid" class="error-msg">
+              Le titre est obligatoire.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="categorie">Catégorie :</label>
+            <select id="categorie" [(ngModel)]="rapport.categorie" name="categorie" #categorie="ngModel" required class="form-control">
+              <option [ngValue]="null" disabled>Choisissez une catégorie</option>
+              <option *ngFor="let c of categories" [ngValue]="c.value">{{ c.label }}</option>
+            </select>
+            <div *ngIf="formulaire.submitted && categorie.invalid" class="error-msg">
+              Veuillez choisir une catégorie.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description :</label>
+            <textarea id="description" [(ngModel)]="rapport.description" name="description" #description="ngModel" required rows="3" placeholder="Décrivez le problème ici..." class="form-control"></textarea>
+            <div *ngIf="formulaire.submitted && description.invalid" class="error-msg">
+              La description est obligatoire.
+            </div>
+          </div>
+        </div>
+
+        <!-- Colonne droite -->
+        <div class="form-column">
+          <div class="form-group">
+            <label for="dateIncident">Date de l'incident :</label>
+            <input type="date" id="dateIncident" name="dateIncident" [(ngModel)]="rapport.dateIncident" #dateIncident="ngModel" required class="form-control" />
+            <div *ngIf="formulaire.submitted && dateIncident.invalid" class="error-msg">
+              La date de l'incident est obligatoire.
+            </div>
+          </div>
+
+        <!-- Liste déroulante Priorité -->
+<div class="form-group">
+  <label for="priority">Priorité :</label>
+  <select id="priority" [(ngModel)]="priorityOption" name="priorityOption" required class="form-control">
+    <option value="" disabled selected>Sélectionnez une priorité</option>
+    <option value="faible">Faible</option>
+    <option value="moyenne">Moyenne</option>
+    <option value="haute">Haute</option>
+  </select>
+  <div *ngIf="formulaire.submitted && !priorityOption" class="error-msg">
+    Veuillez sélectionner une priorité.
+  </div>
+</div>
+
+          <div class="form-group">
+            <label>Criticité :</label>
+            <div *ngFor="let level of levelsCriticite" class="criticite-option">
+              <label>
+                <input type="radio" name="criticite" [(ngModel)]="rapport.criticite" [value]="level" #criticite="ngModel" required />
+                <span class="checkmark"></span>
+                <span>{{ level }}</span>
+              </label>
+            </div>
+            <div *ngIf="formulaire.submitted && !rapport.criticite" class="error-msg">
+              Veuillez sélectionner un niveau de criticité.
+            </div>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <label class="urgent-label">
+              <input type="checkbox" [(ngModel)]="rapport.urgent" name="urgent" />
+              ⚠️ Urgent ?
+            </label>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Description -->
-    <div class="form-group">
-      <label for="description">Description :</label>
-      <textarea id="description" [(ngModel)]="rapport.description" name="description" required rows="3" placeholder="Décrivez le problème ici..." class="form-control"></textarea>
-      <div *ngIf="formulaire.submitted && !rapport.description" class="error-msg">
-        La description est obligatoire.
+      <!-- Superviseur -->
+      <div class="form-group">
+        <label for="superviseur">Assigner à :</label>
+        <select id="superviseur" [(ngModel)]="rapport.assigneA.id" name="assigneAId" #assigneAId="ngModel" required class="form-control">
+          <option [ngValue]="null" disabled>Sélectionnez un superviseur</option>
+          <option *ngFor="let s of superviseurs" [ngValue]="s.id">{{ s.nom }}</option>
+        </select>
+        <div *ngIf="formulaire.submitted && assigneAId.invalid" class="error-msg">
+          Veuillez choisir un superviseur.
+        </div>
       </div>
-    </div>
 
-    <!-- Urgent -->
-    <div class="form-group checkbox-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="rapport.urgent" name="urgent" />
-        Urgent ?
-      </label>
-    </div>
-
-    <!-- Superviseur -->
-    <div class="form-group">
-      <label for="superviseur">Assigner à :</label>
-      <select id="superviseur" [(ngModel)]="rapport.assigneA.id" name="assigneAId" required class="form-control">
-        <option [ngValue]="null" disabled>Sélectionnez un superviseur</option>
-        <option *ngFor="let s of superviseurs" [ngValue]="s.id">{{ s.nom }}</option>
-      </select>
-      <div *ngIf="formulaire.submitted && !rapport.assigneA?.id" class="error-msg">
-        Veuillez choisir un superviseur.
+      <!-- Projet -->
+      <div class="form-group">
+        <label for="projet">Projet :</label>
+        <select id="projet" [(ngModel)]="rapport.projetId" name="projetId" class="form-control">
+          <option [ngValue]="null" disabled>Sélectionnez un projet</option>
+          <option *ngFor="let p of projets" [ngValue]="p.id">{{ p.nom }}</option>
+        </select>
       </div>
-    </div>
 
-    <!-- Photos -->
-    <div class="form-group">
-      <label>Photos :</label>
-      <input type="file" multiple (change)="onFileChange($event)" accept="image/*" />
-    </div>
+      <!-- Sous-traitance -->
+      <div class="form-group">
+        <label>
+          <input type="checkbox" [(ngModel)]="rapport.sousTraitance" name="sousTraitance" (change)="onCheckboxChange()" />
+          Cocher si c’est une sous-traitance
+        </label>
+      </div>
 
-    <!-- Bouton soumettre -->
-    <button type="submit" [disabled]="formulaire.invalid" class="btn-submit">
-      Envoyer Rapport
-    </button>
-  </form>
+      <div class="form-group" *ngIf="rapport.sousTraitance">
+        <label for="sous-traitant">Sélectionnez un sous-traitant :</label>
+        <select id="sous-traitant" [(ngModel)]="rapport.sousTraitantId" name="sousTraitantId" #sousTraitantId="ngModel" required class="form-control">
+          <option [ngValue]="null" disabled>Sélectionnez un sous-traitant</option>
+          <option *ngFor="let st of sousTraitants" [ngValue]="st.id">{{ st.nom }}</option>
+        </select>
+        <div *ngIf="formulaire.submitted && sousTraitantId.invalid" class="error-msg">
+          Veuillez sélectionner un sous-traitant.
+        </div>
+      </div>
+
+      <!-- Upload photos -->
+      <div class="form-group">
+        <label>Photos :</label>
+        <input type="file" multiple (change)="onFileChange($event)" accept="image/*" />
+      </div>
+
+      <!-- Bouton de soumission -->
+      <button type="submit" [disabled]="formulaire.invalid || isLoading" class="btn-submit">
+        {{ isLoading ? 'Envoi...' : 'Envoyer Rapport' }}
+      </button>
+
+      <!-- Loader -->
+      <div *ngIf="isLoading" class="loader-container">
+        <div class="spinner"></div>
+        <p>Envoi du rapport en cours...</p>
+      </div>
+
+    </form>
+  </div>
 </div>

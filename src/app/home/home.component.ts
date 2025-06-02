@@ -30,11 +30,13 @@ export class HomeComponent implements OnInit {
       if (decoded.role === 'SUPERVISEUR') {
         this.router.navigate(['/dashboard/superviseur']);
       } else if (decoded.role === 'OUVRIER') {
-        this.router.navigate(['/formulaire/ouvrier']);
+        this.router.navigate(['/formulaire/ouvrier']); 
+           } else if (decoded.role === 'ADMIN') {
+        this.router.navigate(['/dashboard/admin']);  // <-- Ajout pour ADMIN
       } else {
         alert("Rôle inconnu");
         this.router.navigate(['/login']);
-      }
+      } 
     } catch (error) {
       console.error("Erreur lors du décodage du token", error);
       this.router.navigate(['/login']);

@@ -94,7 +94,7 @@ export class DashboardRapportsComponent implements OnInit {
   }
 
   allerAuxRapports(): void {
-    this.router.navigate(['/dashboard/superviseur']);
+    this.router.navigate(['/dashboard/admin']);
   }
 
   toggleMenu() {
@@ -105,5 +105,14 @@ export class DashboardRapportsComponent implements OnInit {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.router.navigate(['/login']);
-  }
+  } 
+  Utilisateurs(): void {
+  this.router.navigate(['/dashboard/admin']);
+} 
+ Projets(): void {
+    this.router.navigate(['/projects']);
+  }  
+  Soustraitants(): void {
+  this.router.navigate(['/sous-traitants']);
+}
 }

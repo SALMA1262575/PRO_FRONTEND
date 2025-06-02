@@ -6,12 +6,18 @@
     </button>
 
     <div class="dropdown-menu" *ngIf="isMenuOpen">
-      <button (click)="allerAuxRapports()">
-        <i class="fas fa-eye"></i> Voir les rapports
-      </button>
+      <button (click)="Utilisateurs()">
+        <i class="fas fa-users"></i> Utilisateurs
+      </button> 
       <button (click)="deconnecter()">
         <i class="fas fa-sign-out-alt"></i> Se déconnecter
-      </button>
+      </button> 
+      <button (click)="Projets()">
+        <i class="fas fa-project-diagram"></i> Projets 
+      </button>  
+      <button (click)="Soustraitants()">
+        <i class="fas fa-eye"></i> Sous traitants
+      </button> 
     </div>
   </div>
 
