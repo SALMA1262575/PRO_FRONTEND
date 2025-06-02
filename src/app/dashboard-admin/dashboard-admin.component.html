@@ -1,32 +1,42 @@
 <div class="admin-dashboard">
-
-  <!-- Menu utilisateur -->
-  <div class="user-menu-container">
-    <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
-      <i class="fas fa-user-circle" style="font-size: 24px; color: #1e293b;"></i>
-    </button>
-
-    <div class="dropdown-menu" *ngIf="isMenuOpen">
-      <button (click)="Projets()"><i class="fas fa-project-diagram"></i> Projets</button>  
-      <button (click)="RapportsR()"><i class="fas fa-chart-bar"></i> Rapports</button> 
-      <button (click)="Soustraitants()"><i class="fas fa-users-cog"></i> Sous-traitants</button> 
-      <button (click)="deconnecter()"><i class="fas fa-sign-out-alt"></i> Se déconnecter</button> 
+  <!-- Titre, logo et menu utilisateur sur la même ligne -->
+  <div class="header-section">
+    <div class="header-left">
+      <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo">
+      <div class="separator"></div>
+      <h2 class="dashboard-title">Gestion des Utilisateurs</h2>
+    </div>
+    
+    <!-- Menu utilisateur maintenant dans le header -->
+    <div class="user-menu-container">
+      <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
+        <i class="fas fa-user-circle" style="font-size: 24px; color: white;"></i>
+      </button>
+      
+      <div class="dropdown-menu" *ngIf="isMenuOpen">
+        <button (click)="Projets()"><i class="fas fa-project-diagram"></i> Projets</button>
+        <button (click)="RapportsR()"><i class="fas fa-chart-bar"></i> Rapports</button>
+        <button (click)="Soustraitants()"><i class="fas fa-users-cog"></i> Sous-traitants</button>
+        <button (click)="deconnecter()"><i class="fas fa-sign-out-alt"></i> Se déconnecter</button>
+      </div>
     </div>
   </div>
-
-  <!-- Titre et logo -->
-  <div class="header-section">
-    <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo"> 
-    <div class="separator"></div>
-    <h2 class="dashboard-title">Gestion des Utilisateurs</h2>
-  </div>
-
+     
   <!-- Message de confirmation -->
   <div *ngIf="message" class="message">{{ message }}</div>
-
+   
+  <!-- Bouton pour afficher/masquer le formulaire -->
+  <button class="btn-toggle-form" (click)="formVisible = !formVisible">
+    {{ formVisible ? 'Masquer le formulaire' : 'Ajouter un utilisateur' }}
+  </button>
+   
   <!-- Formulaire d'ajout -->
-  <form (submit)="ajouterUtilisateur(); $event.preventDefault()" class="form-ajout">
-    <input
+  <form 
+    *ngIf="formVisible"
+    (submit)="ajouterUtilisateur(); $event.preventDefault()" 
+    class="form-ajout"
+  >
+    <input 
       type="email"
       [(ngModel)]="nouveauUtilisateur.email"
       name="email"
@@ -34,7 +44,7 @@
       required
       autocomplete="off"
     />
-    <input
+    <input 
       type="password"
       [(ngModel)]="nouveauUtilisateur.motDePasse"
       name="motDePasse"
@@ -42,13 +52,13 @@
       required
       autocomplete="new-password"
     />
-    <input
+    <input 
       type="text"
       [(ngModel)]="nouveauUtilisateur.nom"
       name="nom"
       placeholder="Nom"
     />
-    <select
+    <select 
       [(ngModel)]="nouveauUtilisateur.role"
       name="role"
       required
@@ -60,17 +70,17 @@
     </select>
     <button type="submit" class="btn-ajouter">Ajouter</button>
   </form>
-
+   
   <!-- Barre de filtre -->
   <div class="filter-bar">
-    <input
+    <input 
       type="text"
       [(ngModel)]="filterText"
       (ngModelChange)="onFilterChange($event)"
       placeholder="Rechercher par email, nom ou rôle..."
     />
   </div>
-
+   
   <!-- Tableau des utilisateurs -->
   <table class="rapports-table">
     <thead>
@@ -90,7 +100,7 @@
         <td>{{ user.nom || '-' }}</td>
         <td>{{ user.role || '-' }}</td>
         <td>
-          <input
+          <input 
             type="password"
             placeholder="Nouveau mot de passe"
             [(ngModel)]="nouveauxMotsDePasse[user.id]"
@@ -108,5 +118,4 @@
       </tr>
     </tbody>
   </table>
-
 </div>

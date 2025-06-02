@@ -114,5 +114,8 @@ export class DashboardRapportsComponent implements OnInit {
   }  
   Soustraitants(): void {
   this.router.navigate(['/sous-traitants']);
-}
+} 
+  RapportsR(): void {
+    this.router.navigate(['/rapports-admin']);
+  }
 }

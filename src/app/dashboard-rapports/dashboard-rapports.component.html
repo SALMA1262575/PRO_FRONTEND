@@ -8,16 +8,20 @@
     <div class="dropdown-menu" *ngIf="isMenuOpen">
       <button (click)="Utilisateurs()">
         <i class="fas fa-users"></i> Utilisateurs
-      </button> 
-      <button (click)="deconnecter()">
-        <i class="fas fa-sign-out-alt"></i> Se déconnecter
-      </button> 
-      <button (click)="Projets()">
+      </button>  
+        <button (click)="Projets()">
         <i class="fas fa-project-diagram"></i> Projets 
       </button>  
       <button (click)="Soustraitants()">
         <i class="fas fa-eye"></i> Sous traitants
+      </button>  
+      <button (click)="RapportsR()">
+        <i class="fas fa-chart-bar"></i> Rapports
+      </button>  
+      <button (click)="deconnecter()">
+        <i class="fas fa-sign-out-alt"></i> Se déconnecter
       </button> 
+    
     </div>
   </div>
 

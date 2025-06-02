@@ -1,41 +1,32 @@
 <div class="admin-dashboard">
-
-  <!-- Menu utilisateur -->
-  <div class="user-menu-container">
-    <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
-      <i class="fas fa-user-circle" style="font-size: 24px; color: #1e293b;"></i>
-    </button>
-
-    <div class="dropdown-menu" *ngIf="isMenuOpen">
-      <button (click)="Projets()">
-        <i class="fas fa-project-diagram"></i> Projets 
-      </button>   
-      <button (click)="Dashboard()">
-        <i class="fas fa-eye"></i> Dashboard
-      </button> 
-      <button (click)="voirUtilisateurs()">
-        <i class="fas fa-users"></i> Utilisateurs
-      </button> 
-      <button (click)="RapportsR()">
-        <i class="fas fa-eye"></i> Rapports
-      </button>  
-      <button (click)="deconnecter()">
-        <i class="fas fa-sign-out-alt"></i> Se déconnecter
-      </button>  
-    </div>
-  </div>
-
-  <!-- Titre et logo -->
+  <!-- Titre, logo et menu utilisateur sur la même ligne -->
   <div class="header-section">
-    <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo" />
-    <div class="separator"></div>
-    <h2 class="dashboard-title">Gestion des Sous-traitants</h2>
+    <div class="header-left">
+      <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo" />
+      <div class="separator"></div>
+      <h2 class="dashboard-title">Gestion des Sous-traitants</h2>
+    </div>
+
+    <!-- Menu utilisateur dans le header -->
+    <div class="user-menu-container">
+      <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
+        <i class="fas fa-user-circle" style="font-size: 24px; color: white;"></i>
+      </button>
+      
+      <div class="dropdown-menu" *ngIf="isMenuOpen">
+        <button (click)="Projets()"><i class="fas fa-project-diagram"></i> Projets</button>
+        <button (click)="Dashboard()"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+        <button (click)="voirUtilisateurs()"><i class="fas fa-users"></i> Utilisateurs</button>
+        <button (click)="RapportsR()"><i class="fas fa-eye"></i> Rapports</button>
+        <button (click)="deconnecter()"><i class="fas fa-sign-out-alt"></i> Se déconnecter</button>
+      </div>
+    </div>
   </div>
 
   <!-- Message de confirmation -->
   <div *ngIf="message" class="message">{{ message }}</div>
 
-  <!-- Formulaire d'ajout -->
+  <!-- Formulaire d'ajout sous-traitant -->
   <form (submit)="ajouterSousTraitant(); $event.preventDefault()" class="form-ajout">
     <input
       type="text"
@@ -47,14 +38,16 @@
     <button type="submit" class="btn-ajouter">Ajouter</button>
   </form>
 
-  <!-- Filtre -->
-  <input
-    type="text"
-    placeholder="Filtrer par nom de sous-traitant"
-    [(ngModel)]="filterText"
-    (ngModelChange)="applyFilter()"
-    style="margin-bottom: 10px; padding: 5px; width: 300px;"
-  />
+  <!-- Filtre de recherche -->
+  <div class="filter-bar">
+    <input
+      type="text"
+      placeholder="Filtrer par nom de sous-traitant"
+      [(ngModel)]="filterText"
+      (ngModelChange)="applyFilter()"
+      class="filter-input"
+    />
+  </div>
 
   <!-- Tableau des sous-traitants -->
   <table class="rapports-table">
@@ -72,7 +65,7 @@
           <input
             type="text"
             [(ngModel)]="st.nom"
-            [name]="'nom' + st.id"
+            name="nom{{ st.id }}"
           />
         </td>
         <td>
@@ -82,5 +75,4 @@
       </tr>
     </tbody>
   </table>
-
 </div>

@@ -1,476 +1,550 @@
-/* Styles principaux du dashboard */
-/* Styles principaux du dashboard */
-/* Arrière-plan flou avec image BTP */
-.dashboard {
-  position: relative;
+/* Reset et base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #353947 0%, rgb(147, 25, 20) 100%);
   min-height: 100vh;
-  padding: 20px;
+  color: #2d3748;
+  overflow-x: hidden;
 }
 
-.dashboard::before {
-  content: '';
-  position: absolute; /* ou fixed selon le besoin */
-  top: 0;
-  left: 0;
+/* Dashboard principal */
+.admin-dashboard {
+  padding: 1.5rem;
+  min-height: 100vh;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  max-width: 100vw;
   width: 100%;
-  height: 100%;
-  background-image: url('/assets/images/Creer-une-entreprise-de-batiment-travaux-publics.png');
-  background-size: cover;
-  background-position: center;
-  filter: blur(2px);
-  z-index: -1;
-  opacity: 0.3;
 }
 
-.dashboard::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
+/* Header moderne - MODIFIÉ POUR INCLURE LE MENU UTILISATEUR */
+.header-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Changé de flex-start à space-between */
+  margin-bottom: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.2rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 10;
   width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.7); /* Overlay léger */
-  z-index: -1;
 }
-/* Logo */
+
+/* Conteneur pour logo + titre - NOUVEAU */
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
 .logo {
-  background-color: white;
-  color: black;
-  font-weight: bold;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 18px;
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  object-fit: contain;
+  box-shadow: 0 4px 16px rgba(147, 25, 20, 0.3);
+  margin-right: 20px;
 }
 
-/* Barre verticale rouge */
 .separator {
-  width: 3px;
-  height: 24px;
-  background-color: red;
-  margin: 0 12px;
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(135deg, #353947 0%, rgb(147, 25, 20) 100%);
+  margin-right: 20px;
+  border-radius: 1px;
 }
 
-/* Titre */
 .dashboard-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #333;
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #353947 0%, rgb(147, 25, 20) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  margin: 0;
 }
 
-
-
-/* Menu utilisateur déroulant */
+/* Menu utilisateur moderne - MODIFIÉ */
 .user-menu-container {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
   z-index: 1000;
+  /* Supprimé margin-bottom car maintenant dans le header */
 }
 
 .user-icon-button {
-  background: none;
+  background: linear-gradient(135deg, #353947 0%, rgb(147, 25, 20) 100%);
   border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
   cursor: pointer;
-  padding: 10px;
-  border-radius: 50%;
-  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(147, 25, 20, 0.4);
+  position: relative;
+  z-index: 1001;
 }
 
 .user-icon-button:hover {
-  background-color: #e9ecef;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(147, 25, 20, 0.6);
+}
+
+.user-icon-button i {
+  color: white;
+  font-size: 1.5rem;
 }
 
 .dropdown-menu {
   position: absolute;
   right: 0;
-  top: 40px;
-  background-color: white;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  min-width: 180px;
-  border-radius: 5px;
-  padding: 10px 0;
-  font-size: 14px;
-  border-top: 1px solid #eee;
+  top: 60px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border-radius: 15px;
+  padding: 0.5rem;
+  min-width: 200px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeInDown 0.3s ease;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .dropdown-menu button {
-  display: flex;
-  align-items: center;
   width: 100%;
-  padding: 10px 15px;
-  text-align: left;
+  padding: 0.8rem 1rem;
   border: none;
   background: transparent;
-  color: #333;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
   cursor: pointer;
-  font-family: inherit;
+  transition: all 0.2s ease;
+  color: #4a5568;
+  font-weight: 500;
+  text-align: left;
   font-size: 14px;
 }
 
 .dropdown-menu button:hover {
-  background-color: #ffe5e5;
-  color: #800000;
-  font-weight: 500;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  transform: translateX(5px);
 }
 
 .dropdown-menu button i {
-  margin-right: 10px;
-  font-size: 16px;
-  width: 20px;
-  text-align: center;
+  margin-right: 0;
+  width: 16px;
+  color: inherit;
 }
 
-/* Titre et logo */
-.header-section {
+/* Message de confirmation moderne */
+.message {
+  background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+  color: #22543d;
+  padding: 1rem 1.5rem;
+  border-radius: 15px;
   display: flex;
   align-items: center;
+  gap: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(154, 230, 180, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(34, 84, 61, 0.1);
+  animation: slideIn 0.3s ease;
   margin-bottom: 20px;
 }
 
-.logo {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  margin-right: 15px;
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.dashboard-title {
-  color: #334155;
-  font-size: 30px;
-  font-weight: 500;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  letter-spacing: 1px;
-  border-left: 5px solid rgb(147, 25, 20);
-  padding-left: 15px;
-  margin: 0;
+/* Formulaire d'ajout moderne */
+.form-ajout {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: end;
 }
 
-/* Section des filtres */
-.filters {
-  background: white;
-  padding: 15px;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.filters label {
-  font-weight: 500;
-  color: #555;
-  white-space: nowrap;
+.form-ajout input {
+  padding: 1rem 1.2rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
   font-size: 14px;
+  transition: all 0.3s ease;
+  background: rgba(247, 250, 252, 0.8);
+  backdrop-filter: blur(10px);
+  font-weight: 500;
+  color: #4a5568;
 }
 
-.filters input[type="text"] {
-  padding: 6px 10px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  font-size: 14px;
-  min-width: 150px;
-}
-
-.filters input[type="text"]:focus {
+.form-ajout input:focus {
   outline: none;
   border-color: rgb(147, 25, 20);
-  box-shadow: 0 0 0 2px rgba(147, 25, 20, 0.2);
-}
-
-.filters button {
-  padding: 8px 16px;
-  border: 1px solid rgb(147, 25, 20);
-  background: rgb(147, 25, 20);
-  color: white;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s;
-}
-
-.filters button:hover {
-  background-color: rgb(110, 19, 15);
-  border-color: rgb(110, 19, 15);
-}
-
-.filters button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  background-color: #6c757d;
-  border-color: #6c757d;
-}
-
-/* Loader */
-.loader {
-  text-align: center;
-  padding: 40px;
-  color: #666;
-  font-style: italic;
   background: white;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(147, 25, 20, 0.2);
+  transform: translateY(-2px);
 }
 
-/* Formulaire d'ajout d'utilisateur */
-.form-ajout {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  margin-bottom: 20px;
-  background: white;
-  padding: 15px;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.form-ajout input,
-.form-ajout select {
-  padding: 8px 10px;
-  font-size: 13px;
-  border-radius: 4px;
-  border: 1px solid #ced4da;
-  width: 100%;
-}
-
-.form-ajout button.btn-ajouter {
-  background-color: rgb(147, 25, 20);
+.btn-ajouter {
+  background: linear-gradient(135deg, rgb(147, 25, 20), #882020);
   color: white;
   border: none;
-  padding: 8px 14px;
-  font-size: 13px;
-  border-radius: 4px;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  align-self: flex-start;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(147, 25, 20, 0.3);
+  white-space: nowrap;
 }
 
-.form-ajout button.btn-ajouter:hover {
-  background-color: rgb(110, 19, 15);
+.btn-ajouter:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(147, 25, 20, 0.4);
 }
 
-/* Tableau des utilisateurs */
+/* Input de filtre moderne */
+.filter-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem 1.2rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 14px;
+  background: rgba(247, 250, 252, 0.8);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  font-weight: 500;
+  color: #4a5568;
+  margin-bottom: 20px;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: rgb(147, 25, 20);
+  background: white;
+  box-shadow: 0 4px 20px rgba(147, 25, 20, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Conteneur de tableau moderne */
+.table-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(147, 25, 20, 0.5) rgba(255, 255, 255, 0.1);
+}
+
+.table-container::-webkit-scrollbar {
+  height: 12px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin: 0 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #353947 0%, rgb(147, 25, 20) 100%);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, rgb(147, 25, 20) 0%, #353947 100%);
+}
+
+/* Tableau moderne */
 .rapports-table {
   width: 100%;
-  background: white;
   border-collapse: collapse;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #dee2e6;
-  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  font-size: 1rem;
+  overflow: hidden;
 }
 
 .rapports-table thead {
-  background-color: #f8f9fa;
-}
-
-.rapports-table th,
-.rapports-table td {
-  padding: 6px 10px;
-  border-bottom: 1px solid #dee2e6;
-  border-right: 1px solid rgb(147, 25, 20);
-  font-size: 13px;
-  color: #495057;
-  text-align: left;
-}
-
-.rapports-table th:last-child,
-.rapports-table td:last-child {
-  border-right: none;
+  background: linear-gradient(135deg, #353947 0%, rgb(147, 25, 20) 100%);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .rapports-table th {
+  padding: 1.5rem 1rem;
+  text-align: left;
   font-weight: 600;
-  background-color: #f8f9fa;
-  border-bottom: 2px solid #dee2e6;
+  color: white;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: none;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.rapports-table tbody tr {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .rapports-table tbody tr:hover {
-  background-color: #f5f5f5;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.rapports-table tbody tr:nth-child(even) {
-  background-color: #fdfdfd;
+.rapports-table tbody tr:last-child {
+  border-bottom: none;
 }
 
-/* Input mot de passe dans le tableau */
-.input-password {
-  width: 90%;
-  padding: 6px 8px;
-  margin-bottom: 6px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  font-size: 12px;
+.rapports-table td {
+  padding: 1.5rem 1rem;
+  font-size: 1rem;
+  color: #4a5568;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 1.5;
 }
 
-/* Bouton Réinitialiser */
-.btn-reset {
-  background-color: rgb(147, 25, 20);
-  color: white;
-  border: none;
-  padding: 4px 8px;
-  font-size: 11px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  text-align: center;
+/* Inputs dans le tableau modernisés */
+.rapports-table td input {
+  padding: 0.8rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 14px;
+  width: 100%;
+  background: rgba(247, 250, 252, 0.8);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  font-weight: 500;
+  color: #4a5568;
 }
 
-.btn-reset:hover {
-  background-color: rgb(110, 19, 15);
+.rapports-table td input:focus {
+  outline: none;
+  border-color: rgb(147, 25, 20);
+  background: white;
+  box-shadow: 0 4px 20px rgba(147, 25, 20, 0.2);
+  transform: translateY(-2px);
 }
 
-/* Bouton Supprimer */
-.btn-delete {
-  background-color: rgb(147, 25, 20);
-  color: white;
-  border: none;
-  padding: 4px 8px;
-  font-size: 11px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  text-align: center;
-}
-
-.btn-delete:hover {
-  background-color: rgb(110, 19, 15);
-}
-
-/* Colonne Actions centrée */
-.rapports-table td.actions,
-.rapports-table th.actions {
-  text-align: center;
+/* Boutons d'actions modernisés */
+.rapports-table td {
   white-space: nowrap;
 }
 
-/* Section photos */
-.photos-section {
-  margin-top: 30px;
-  background: white;
-  padding: 20px;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #dee2e6;
+.rapports-table td button {
+  margin-right: 8px;
+  margin-bottom: 4px;
 }
 
-.photos-section h3 {
-  color: #495057;
-  margin-bottom: 15px;
-  font-size: 18px;
+.btn-delete {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
   font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.photos-section > div {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
+.btn-delete:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
 }
 
-.photos-section img {
-  width: 100%;
-  max-width: 300px;
-  height: auto;
-  border-radius: 4px;
-  border: 1px solid #dee2e6;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px;
+/* Animations d'entrée */
+.fade-in {
+  animation: fadeInUp 0.6s ease forwards;
 }
 
-/* Message "Aucun rapport trouvé" */
-.dashboard p {
-  text-align: center;
-  padding: 40px;
-  color: #6c757d;
-  font-style: italic;
-  background: white;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #dee2e6;
-  margin-top: 20px;
+.fade-in:nth-child(2) { animation-delay: 0.1s; }
+.fade-in:nth-child(3) { animation-delay: 0.2s; }
+.fade-in:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Responsive design */
+/* Responsive design amélioré */
+@media (max-width: 1024px) {
+  .admin-dashboard {
+    padding: 1rem;
+  }
+  
+  .dashboard-title {
+    font-size: 1.8rem;
+  }
+}
+
 @media (max-width: 768px) {
-  .filters {
+  .admin-dashboard {
+    padding: 0.8rem;
+  }
+  
+  .header-section {
     flex-direction: column;
-    align-items: stretch;
+    text-align: center;
+    padding: 1.2rem;
+    gap: 1rem;
   }
-
-  .filters > * {
+  
+  .header-left {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .logo {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+  
+  .separator {
+    display: none;
+  }
+  
+  .dashboard-title {
+    font-size: 1.6rem;
+  }
+  
+  .user-menu-container {
+    margin-top: 1rem;
+  }
+  
+  .form-ajout {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+  
+  .rapports-table {
+    font-size: 0.9rem;
+  }
+  
+  .rapports-table th,
+  .rapports-table td {
+    padding: 1rem 0.8rem;
+  }
+  
+  .rapports-table td button {
+    margin-bottom: 8px;
+    display: block;
     width: 100%;
-    margin-bottom: 10px;
   }
+}
 
+@media (max-width: 480px) {
+  .dashboard-title {
+    font-size: 1.4rem;
+  }
+  
   .rapports-table {
     display: block;
     overflow-x: auto;
     white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
   }
-
+  
+  .rapports-table thead,
+  .rapports-table tbody,
   .rapports-table th,
+  .rapports-table td,
+  .rapports-table tr {
+    display: block;
+  }
+  
+  .rapports-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  
+  .rapports-table tr {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  
   .rapports-table td {
-    min-width: 80px;
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
-
-  .actions {
-    flex-direction: column;
-    gap: 4px;
-    min-width: 150px;
+  
+  .rapports-table td:before {
+    content: attr(data-label) ": ";
+    position: absolute;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: 600;
+    color: #374151;
   }
-
-  .actions > * {
-    width: 100%;
-  }
-}
-
-/* Modale d'affichage des photos */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1001;
-}
-
-.modal {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 600px;
-  width: 90%;
-  position: relative;
-  border-top: 8px solid #800000; /* Bordeaux */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.gallery {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.gallery img {
-  max-width: 100%;
-  max-height: 400px;
-  object-fit: contain;
-  border-radius: 8px;
-  border: 1px solid #ccc;
 }

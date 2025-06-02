@@ -1,95 +1,127 @@
 <div class="dashboard">
+ 
 
-  <!-- Menu utilisateur -->
-  <div class="user-menu-container">
-    <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
-      <i class="fas fa-user-circle" style="font-size: 24px; color: #1e293b;"></i>
-    </button>
+  <!-- Header avec titre et logo -->
+  <div class="header-container">
+    <div class="header-section">
+      <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo">
+      <h1 class="dashboard-title">Tableau de bord Superviseur</h1>
+    </div>
+    
+    <!-- Menu utilisateur à droite -->
+    <div class="user-menu-container">
+      <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
+        <i class="fas fa-user-circle"></i>
+      </button>
+      
+      <div class="dropdown-menu" *ngIf="isMenuOpen">
+        <button (click)="deconnecter()">
+          <i class="fas fa-sign-out-alt"></i> Se déconnecter
+        </button>
+      </div>
+    </div>
+  </div>
 
-    <div class="dropdown-menu" *ngIf="isMenuOpen">
-      <button (click)="deconnecter()">
-        <i class="fas fa-sign-out-alt"></i> Se déconnecter
+  <!-- Section des filtres -->
+  <div class="filters">
+    <div class="filter-group">
+      <label for="categorie">Filtrer par catégorie</label>
+      <input type="text" id="categorie" [(ngModel)]="filtreCategorie" placeholder="Entrez une catégorie">
+    </div>
+    
+    <div class="filter-group">
+      <label for="statut">Filtrer par statut</label>
+      <input type="text" id="statut" [(ngModel)]="filtreStatut" placeholder="Entrez un statut">
+    </div>
+    
+    <div class="filter-buttons">
+      <button (click)="filtrerRapports()" [disabled]="loading">
+        <i class="fas fa-filter"></i> Appliquer les filtres
+      </button>
+      <button (click)="getTousLesRapports()" [disabled]="loading">
+        <i class="fas fa-refresh"></i> Réinitialiser
       </button>
     </div>
   </div>
 
-  <!-- Titre et logo -->
-  <div class="header-section">
-    <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo">
-    <h2 class="dashboard-title">Tableau de bord Superviseur</h2>
-  </div>
-
-  <!-- Filtres -->
-  <div class="filters">
-    <label for="categorie">Filtrer par catégorie :</label>
-    <input type="text" id="categorie" [(ngModel)]="filtreCategorie" placeholder="Catégorie">
-
-    <label for="statut">Filtrer par statut :</label>
-    <input type="text" id="statut" [(ngModel)]="filtreStatut" placeholder="Statut">
-
-    <button (click)="filtrerRapports()" [disabled]="loading">Appliquer les filtres</button>
-    <button (click)="getTousLesRapports()" [disabled]="loading">Réinitialiser</button>
-  </div>
-
   <!-- Loader -->
   <div *ngIf="loading" class="loader">
-    Chargement en cours...
+    <div class="spinner"></div>
+    <p>Chargement en cours...</p>
   </div>
 
   <!-- Tableau des rapports -->
-  <table *ngIf="!loading && rapports.length > 0" class="rapports-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Titre</th>
-        <th>Catégorie</th>
-        <th>Statut</th>
-        <th>Description</th>
-        <th>Urgent ?</th>
-        <th>Priorité</th>
-        <th>Criticité</th>
-        <th>Date incident</th>
-        <th>Équipe assignée</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let rapport of rapports">
-        <td>{{ rapport.id }}</td>
-        <td>{{ rapport.titre }}</td>
-        <td>{{ rapport.categorie }}</td>
-        <td>{{ rapport.statut }}</td>
-        <td>{{ rapport.description || 'Aucune' }}</td>
-        <td>{{ rapport.urgent ? 'Oui' : 'Non' }}</td>
-        <td>{{ rapport.priorite ? 'Haute' : 'Basse' }}</td>
-        <td>{{ rapport.criticite || 'Non définie' }}</td>
-        <td>{{ rapport.dateIncident || 'Non renseignée' }}</td>
-        <td>{{ rapport.equipe || 'Aucune' }}</td>
-        <td class="actions">
-          <!-- Changer le statut -->
-          <select 
-            (change)="onChangerStatut(rapport, $event)"
-            [value]="rapport.statut">
-            <option value="ouvert">Ouvert</option>
-            <option value="en_cours">En cours</option>
-            <option value="resolu">Résolu</option>
-          </select>
-
-          <!-- Assigner à une équipe -->
-          <input type="text" #equipeInput placeholder="Nom de l'équipe">
-          <button (click)="assignerEquipe(rapport.id, equipeInput.value)">Assigner</button>
-
-          <!-- Voir les photos -->
-          <button (click)="voirPhotos(rapport.id)">Voir les photos</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div *ngIf="!loading && rapports.length > 0" class="table-container">
+    <table class="rapports-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Titre</th>
+          <th>Catégorie</th>
+          <th>Statut</th>
+          <th>Description</th>
+          <th>Urgent ?</th>
+          <th>Priorité</th>
+          <th>Criticité</th>
+          <th>Date incident</th>
+          <th>Équipe assignée</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rapport of rapports">
+          <td>{{ rapport.id }}</td>
+          <td>{{ rapport.titre }}</td>
+          <td>{{ rapport.categorie }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="'status-' + rapport.statut">
+              {{ rapport.statut }}
+            </span>
+          </td>
+          <td>{{ rapport.description || 'Aucune' }}</td>
+          <td>
+            <span class="urgency-badge" [ngClass]="rapport.urgent ? 'urgent-yes' : 'urgent-no'">
+              {{ rapport.urgent ? 'Oui' : 'Non' }}
+            </span>
+          </td>
+          <td>{{ rapport.priorite ? 'Haute' : 'Basse' }}</td>
+          <td>{{ rapport.criticite || 'Non définie' }}</td>
+          <td>{{ rapport.dateIncident || 'Non renseignée' }}</td>
+          <td>{{ rapport.equipe || 'Aucune' }}</td>
+          <td class="actions">
+            <!-- Changer le statut -->
+            <select 
+              (change)="onChangerStatut(rapport, $event)"
+              [value]="rapport.statut">
+              <option value="ouvert">Ouvert</option>
+              <option value="en_cours">En cours</option>
+              <option value="resolu">Résolu</option>
+            </select>
+            
+            <!-- Assigner à une équipe -->
+            <input type="text" #equipeInput placeholder="Nom de l'équipe">
+            <button (click)="assignerEquipe(rapport.id, equipeInput.value)">
+              <i class="fas fa-users"></i> Assigner
+            </button>
+            
+            <!-- Voir les photos -->
+            <button (click)="voirPhotos(rapport.id)">
+              <i class="fas fa-images"></i> Photos
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <!-- Aucun rapport trouvé -->
-  <p *ngIf="!loading && rapports.length === 0">Aucun rapport trouvé.</p>
+  <div *ngIf="!loading && rapports.length === 0" class="no-data">
+    <i class="fas fa-inbox"></i>
+    <p>Aucun rapport trouvé</p>
+    <small>Essayez de modifier vos filtres ou réinitialisez la recherche</small>
+  </div>
 
-  <!-- Affichage des photos -->
+  <!-- Section photos (si affichage direct) -->
   <div *ngIf="photos.length > 0" class="photos-section">
     <h3>Photos du rapport</h3>
     <div class="photo-gallery">
@@ -100,12 +132,16 @@
   <!-- Modale pour afficher les photos -->
   <div *ngIf="showModal" class="overlay" (click)="fermerModal()">
     <div class="modal" (click)="$event.stopPropagation()">
-      <span class="close" (click)="fermerModal()">×</span>
-      <h2>Photos du rapport</h2>
+      <button class="close" (click)="fermerModal()">
+        <i class="fas fa-times"></i>
+      </button>
+      <h2>
+        <i class="fas fa-images"></i>
+        Photos du rapport
+      </h2>
       <div class="gallery">
-        <img *ngFor="let photo of photos" [src]="photo" alt="Photo rapport">
+        <img *ngFor="let photo of photos" [src]="photo" alt="Photo rapport" >
       </div>
     </div>
   </div>
-
 </div>

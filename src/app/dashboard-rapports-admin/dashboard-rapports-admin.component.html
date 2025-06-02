@@ -1,125 +1,151 @@
-<div class="admin-dashboard">
-
-  <!-- Menu utilisateur -->
-  <div class="user-menu-container">
-    <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
-      <i class="fas fa-user-circle" style="font-size: 24px; color: #1e293b;"></i>
-    </button>
-
-    <div class="dropdown-menu" *ngIf="isMenuOpen">
-      <button (click)="voirRapports()">
-        <i class="fas fa-eye"></i> Dashboard
+<div class="dashboard">
+  
+  <!-- Header avec titre et logo -->
+  <div class="header-container">
+    <div class="header-section">
+      <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo">
+      <h1 class="dashboard-title">Gestion des Rapports</h1>
+    </div>
+    
+    <!-- Menu utilisateur à droite -->
+    <div class="user-menu-container">
+      <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
+        <i class="fas fa-user-circle"></i>
       </button>
-      <button (click)="Utilisateurs()">
-        <i class="fas fa-users"></i> Utilisateurs
-      </button>
-      <button (click)="Soustraitants()">
-        <i class="fas fa-eye"></i> Sous traitants
-      </button>
-      <button (click)="Projects()">
-        <i class="fas fa-project-diagram"></i> Projets
-      </button>
-      <button (click)="deconnecter()">
-        <i class="fas fa-sign-out-alt"></i> Se déconnecter
-      </button>
+      
+      <div class="dropdown-menu" *ngIf="isMenuOpen">
+        <button (click)="voirRapports()">
+          <i class="fas fa-tachometer-alt"></i> Dashboard
+        </button>
+        <button (click)="Utilisateurs()">
+          <i class="fas fa-users"></i> Utilisateurs
+        </button>
+        <button (click)="Soustraitants()">
+          <i class="fas fa-eye"></i> Sous traitants
+        </button>
+        <button (click)="Projects()">
+          <i class="fas fa-chart-bar"></i> Projets
+        </button>
+        <button (click)="deconnecter()">
+          <i class="fas fa-sign-out-alt"></i> Se déconnecter
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- Titre et logo -->
-  <div class="header-section">
-    <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo">
-    <div class="separator"></div>
-    <h2 class="dashboard-title">Gestion des Rapports</h2>
+  <!-- Message de confirmation -->
+  <div *ngIf="message" class="message-container">
+    <div class="message">
+      <i class="fas fa-check-circle"></i>
+      {{ message }}
+    </div>
   </div>
 
-  <!-- Message de confirmation -->
-  <div *ngIf="message" class="message">{{ message }}</div>
-
   <!-- Tableau des rapports -->
-  <table class="rapports-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Catégorie</th>
-        <th>Titre</th>
-        <th>Description</th>
-        <th>Statut</th>
-        <th>Équipe</th>
-        <th>Priorité</th>
-        <th>Criticité</th>
-        <th>Date incident</th>
-        <th>Urgent</th>
-        <th>Photos</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let rapport of rapports">
-        <td>{{ rapport.id }}</td>
-        <td>{{ rapport.categorie }}</td>
-        <td>{{ rapport.titre }}</td>
-        <td>{{ rapport.description || 'Aucune description' }}</td>
+  <div class="table-container">
+    <table class="rapports-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Catégorie</th>
+          <th>Titre</th>
+          <th>Description</th>
+          <th>Statut</th>
+          <th>Équipe</th>
+          <th>Priorité</th>
+          <th>Criticité</th>
+          <th>Date incident</th>
+          <th>Urgent</th>
+          <th>Photos</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rapport of rapports">
+          <td>{{ rapport.id }}</td>
+          <td>{{ rapport.categorie }}</td>
+          <td>{{ rapport.titre }}</td>
+          <td>{{ rapport.description || 'Aucune description' }}</td>
 
-        <!-- Sélecteur de statut -->
-        <td>
-          <select [(ngModel)]="rapport.statut" name="statut{{ rapport.id }}" (change)="changerStatut(rapport)">
-            <option value="NOUVEAU">NOUVEAU</option>
-            <option value="ASSIGNE">ASSIGNÉ</option>
-            <option value="EN_COURS">EN COURS</option>
-            <option value="RESOLU">RÉSOLU</option>
-          </select>
-        </td>
+          <!-- Sélecteur de statut -->
+          <td>
+            <select [(ngModel)]="rapport.statut" name="statut{{ rapport.id }}" (change)="changerStatut(rapport)" class="status-select">
+              <option value="NOUVEAU">NOUVEAU</option>
+              <option value="ASSIGNE">ASSIGNÉ</option>
+              <option value="EN_COURS">EN COURS</option>
+              <option value="RESOLU">RÉSOLU</option>
+            </select>
+          </td>
 
-        <!-- Champ équipe -->
-        <td>
-          <input type="text" [(ngModel)]="rapport.equipe" name="equipe{{ rapport.id }}" />
-        </td>
+          <!-- Champ équipe -->
+          <td>
+            <input type="text" [(ngModel)]="rapport.equipe" name="equipe{{ rapport.id }}" class="team-input" placeholder="Équipe..." />
+          </td>
 
-        <!-- Checkbox priorité -->
-        <td>
-          <input type="checkbox" [(ngModel)]="rapport.priorite" name="priorite{{ rapport.id }}" />
-        </td>
+          <!-- Checkbox priorité -->
+          <td>
+            <div class="priority-checkbox">
+              <input type="checkbox" [(ngModel)]="rapport.priorite" name="priorite{{ rapport.id }}" id="priorite{{ rapport.id }}" />
+              <label for="priorite{{ rapport.id }}">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </td>
 
-        <!-- Sélecteur criticité -->
-        <td>
-          <select [(ngModel)]="rapport.criticite" name="criticite{{ rapport.id }}">
-            <option value="MINEUR">Faible</option>
-            <option value="MAJEUR">Moyenne</option>
-            <option value="CRITIQUE">Élevée</option>
-          </select>
-        </td>
+          <!-- Sélecteur criticité -->
+          <td>
+            <select [(ngModel)]="rapport.criticite" name="criticite{{ rapport.id }}" class="criticite-select">
+              <option value="MINEUR">Faible</option>
+              <option value="MAJEUR">Moyenne</option>
+              <option value="CRITIQUE">Élevée</option>
+            </select>
+          </td>
 
-        <!-- Date incident -->
-        <td>
-          <input type="date" [(ngModel)]="rapport.dateIncident" name="dateIncident{{ rapport.id }}" />
-        </td>
+          <!-- Date incident -->
+          <td>
+            <input type="date" [(ngModel)]="rapport.dateIncident" name="dateIncident{{ rapport.id }}" class="date-input" />
+          </td>
 
-        <!-- Checkbox urgent -->
-        <td>
-          <input type="checkbox" [checked]="rapport.urgent" disabled />
-        </td>
+          <!-- Checkbox urgent -->
+          <td>
+            <span class="urgency-badge" [ngClass]="rapport.urgent ? 'urgent-yes' : 'urgent-no'">
+              {{ rapport.urgent ? 'Oui' : 'Non' }}
+            </span>
+          </td>
 
-        <!-- Bouton voir les photos -->
-        <td>
-          <button (click)="voirPhotos(rapport.id)">Voir les photos</button>
-        </td>
+          <!-- Bouton voir les photos -->
+          <td>
+            <button class="photo-btn" (click)="voirPhotos(rapport.id)">
+              <i class="fas fa-images"></i> Photos
+            </button>
+          </td>
 
-        <!-- Actions -->
-        <td>
-          <button class="btn-delete" (click)="supprimerRapport(rapport.id)">Supprimer</button>
-          <button class="btn-ajouter" (click)="mettreAJourRapport(rapport)">Mettre à jour</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          <!-- Actions -->
+          <td class="actions">
+            <button class="btn-update" (click)="mettreAJourRapport(rapport)">
+              <i class="fas fa-edit"></i> Mettre à jour
+            </button>
+            <button class="btn-delete" (click)="supprimerRapport(rapport.id)">
+              <i class="fas fa-trash"></i> Supprimer
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <!-- Modal pour afficher les photos -->
-  <div *ngIf="showModal" class="modal" (clickOutside)="fermerModal()">
-    <div class="modal-content">
-      <span (click)="fermerModal()" class="close">&times;</span>
-      <h3>Photos du rapport</h3>
-      <div class="photos-container">
-        <img *ngFor="let photo of photos" [src]="photo" alt="Photo du rapport" class="photo-item" />
+  <!-- Modale pour afficher les photos -->
+  <div *ngIf="showModal" class="overlay" (click)="fermerModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <button class="close" (click)="fermerModal()">
+        <i class="fas fa-times"></i>
+      </button>
+      <h2>
+        <i class="fas fa-images"></i>
+        Photos du rapport
+      </h2>
+      <div class="gallery">
+        <img *ngFor="let photo of photos" [src]="photo" alt="Photo du rapport" class="photo-item">
       </div>
     </div>
   </div>

@@ -23,7 +23,9 @@ export class DashboardAdminComponent implements OnInit {
   filterText: string = '';
   isMenuOpen: boolean = false;
   message: string | null = null;
-  nouveauxMotsDePasse: { [userId: number]: string } = {};
+  nouveauxMotsDePasse: { [userId: number]: string } = {}; 
+  formVisible: boolean = false;
+
 
   constructor(
     private adminService: AdminService,
@@ -103,14 +105,15 @@ export class DashboardAdminComponent implements OnInit {
     });
   }
 
-  appliquerFiltre(): void {
-    const filter = this.filterText.toLowerCase();
-    this.filteredUtilisateurs = this.utilisateurs.filter(u =>
-      u.email.toLowerCase().includes(filter) ||
-      u.nom.toLowerCase().includes(filter) ||
-      u.role.toLowerCase().includes(filter)
-    );
-  }
+appliquerFiltre(): void {
+  const filter = this.filterText.toLowerCase();
+  this.filteredUtilisateurs = this.utilisateurs.filter(u =>
+    u.email.toLowerCase().includes(filter) ||
+    (u.nom && u.nom.toLowerCase().includes(filter)) ||
+    (u.role && u.role.toLowerCase().includes(filter))
+  );
+}
+
 
   onFilterChange(value: string): void {
     this.filterText = value;

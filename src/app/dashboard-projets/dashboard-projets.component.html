@@ -1,40 +1,31 @@
 <div class="admin-dashboard">
-
-  <!-- Menu utilisateur -->
-  <div class="user-menu-container">
-    <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
-      <i class="fas fa-user-circle" style="font-size: 24px; color: #1e293b;"></i>
-    </button>
-
-    <div class="dropdown-menu" *ngIf="isMenuOpen">
-      <button (click)="voirRapports()">
-        <i class="fas fa-tachometer-alt"></i> Dashboard
-      </button>  
-      <button (click)="Utilisateurs()">
-        <i class="fas fa-users"></i> Utilisateurs
-      </button>  
-      <button (click)="Soustraitants()">
-        <i class="fas fa-user-cog"></i> Sous-traitants
-      </button> 
-      <button (click)="RapportsR()">
-        <i class="fas fa-file-alt"></i> Rapports
-      </button>  
-      <button (click)="deconnecter()">
-        <i class="fas fa-sign-out-alt"></i> Se déconnecter
-      </button> 
+  <!-- Titre, logo et menu utilisateur sur la même ligne -->
+  <div class="header-section">
+    <div class="header-left">
+      <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo">
+      <div class="separator"></div>
+      <h2 class="dashboard-title">Gestion des Projets</h2>
+    </div>
+    
+    <!-- Menu utilisateur maintenant dans le header -->
+    <div class="user-menu-container">
+      <button class="user-icon-button" (click)="toggleMenu()" aria-label="Ouvrir le menu utilisateur">
+        <i class="fas fa-user-circle" style="font-size: 24px; color: white;"></i>
+      </button>
+      
+      <div class="dropdown-menu" *ngIf="isMenuOpen">
+        <button (click)="voirRapports()"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+        <button (click)="Utilisateurs()"><i class="fas fa-users"></i> Utilisateurs</button>
+        <button (click)="Soustraitants()"><i class="fas fa-user-cog"></i> Sous-traitants</button>
+        <button (click)="RapportsR()"><i class="fas fa-chart-bar"></i> Rapports</button>
+        <button (click)="deconnecter()"><i class="fas fa-sign-out-alt"></i> Se déconnecter</button>
+      </div>
     </div>
   </div>
-
-  <!-- En-tête avec logo et titre -->
-  <div class="header-section">
-    <img src="assets/images/tgcc.png" alt="Logo TGCC" class="logo" />
-    <div class="separator"></div>
-    <h2 class="dashboard-title">Gestion des Projets</h2>
-  </div>
-
+  
   <!-- Message de notification -->
   <div *ngIf="message" class="message">{{ message }}</div>
-
+  
   <!-- Formulaire d'ajout projet -->
   <form (submit)="ajouterProjet(); $event.preventDefault()" class="form-ajout">
     <input
@@ -45,17 +36,19 @@
       required
     />
     <button type="submit" class="btn-ajouter">Ajouter</button>
-  </form> 
-
+  </form>
+  
   <!-- Filtre de recherche -->
-  <input
-    type="text"
-    placeholder="Filtrer les projets..."
-    [(ngModel)]="filterText"
-    (ngModelChange)="onFilterChange($event)"
-    class="filter-input"
-  />
-
+  <div class="filter-bar">
+    <input
+      type="text"
+      placeholder="Filtrer les projets..."
+      [(ngModel)]="filterText"
+      (ngModelChange)="onFilterChange($event)"
+      class="filter-input"
+    />
+  </div>
+  
   <!-- Tableau des projets -->
   <table class="rapports-table">
     <thead>
@@ -82,5 +75,4 @@
       </tr>
     </tbody>
   </table>
-
 </div>

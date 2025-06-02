@@ -115,5 +115,7 @@ Soustraitants(): void {
     this.router.navigate(['/projects']);
   } 
 
- 
+ RapportsR(): void {
+    this.router.navigate(['/rapports-admin']);
+  }
 }
